@@ -4,13 +4,14 @@ const initailState = {
   chats: [],
 };
 
-const chatReducer = (state = initailState, actions) => {
-  if (actions.type === CHATS) {
+const chatReducer = (state = initailState, action) => {
+  if (action.type === CHATS) {
     return {
       ...state,
-      chats: actions.payload,
+      chats: action.chats,
     };
   }
+  return state
 };
 
 export default chatReducer;

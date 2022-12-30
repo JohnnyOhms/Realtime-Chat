@@ -1,16 +1,18 @@
 import { SET_USER } from "../actions/actionType";
 
 const initialState = {
-  user: null,
+  user: "John",
 };
 
-const userReducer = (state = initialState, actions) => {
-  if (actions.type === SET_USER) {
+const userReducer = (state = initialState, action) => {
+  if (action.type === SET_USER) {
     return {
       ...state,
-      user: actions.payload,
+      user: action.user,
     };
   }
+
+  return state
 };
 
 export default userReducer;
