@@ -3,9 +3,23 @@ import {
   signInWithPopup,
   GoogleAuthProvider,
   onAuthStateChanged,
+  signOut,
 } from "firebase/auth";
-import { auth } from "../firebase";
+import { provider, db } from "../firebase";
 import { SET_USER, CHATS } from "./actionType";
+import { serverTimestamp } from "firebase/database";
+import {
+  addDoc,
+  collection,
+  doc,
+  documentId,
+  getDocs,
+  onSnapshot,
+  orderBy,
+  query,
+  setDoc,
+  where,
+} from "firebase/firestore";
 
 export const userAction = (payload) => ({
   type: SET_USER,
@@ -17,7 +31,7 @@ export const chatsAction = (payload) => ({
   chats: payload,
 });
 
-// const auth = getAuth();
+export const auth = getAuth();
 
 export const signInAPI = () => {
   return (dispatch) => {
@@ -28,7 +42,7 @@ export const signInAPI = () => {
         const token = credential.accessToken;
         // The signed-in user info.
         const user = result.user;
-        dispatch(userAction(user));
+        dispatch(userAction(user.email));
         // ...
       })
       .catch((error) => {
@@ -40,6 +54,7 @@ export const signInAPI = () => {
         // The AuthCredential type that was used.
         const credential = GoogleAuthProvider.credentialFromError(error);
         // ...
+        alert(errorMessage);
       });
   };
 };
@@ -48,12 +63,86 @@ export const onAuthUser = () => {
   return (dispatch) => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
-        // User is signed in, see docs for a list of available properties
-        // https://firebase.google.com/docs/reference/js/firebase.User
-        const uid = user.uid;
-        console.log(user);
-        dispatch(userAction());
+        const userEmail = user.email;
+        dispatch(userAction(userEmail));
       }
     });
   };
 };
+
+export const signOutApi = () => {
+  return (dispatch) => {
+    signOut(auth)
+      .then(() => {
+        dispatch(userAction(null));
+      })
+      .catch((error) => {
+        // An error happened.
+      });
+  };
+};
+
+export function writeMessage(userId, name, imageUrl, mssgs) {
+  return async (dispatch) => {
+    try {
+      const docRef = await addDoc(collection(db, "messages"), {
+        userId,
+        username: name,
+        profile_picture: imageUrl,
+        message: mssgs,
+        timestamp: new Date(),
+      });
+    } catch (e) {
+      console.error("Error adding document: ", e);
+    }
+  };
+}
+
+export function getMessage() {
+  return async (dispatch) => {
+    const q = query(collection(db, "messages"), orderBy("timestamp"));
+    const unsubscribe = onSnapshot(q, (snapshot) => {
+      const mssg = [];
+      snapshot.forEach((doc) => {
+        mssg.push({ ...doc.data(), keyId: doc.id });
+      });
+      dispatch(chatsAction(mssg));
+    });
+    return () => unsubscribe();
+  };
+}
+
+export function getSingleData(keyId) {
+  return async (dispatch) => {
+    const q = query(
+      collection(db, "messages"),
+      where(documentId(), "==", keyId)
+    );
+    const unsubscribe = onSnapshot(q, (snapshot) => {
+      const mssg = [];
+      snapshot.forEach((doc) => {
+        mssg.push({ ...doc.data(), keyId: doc.id });
+      });
+      dispatch(updateMessage(mssg));
+    });
+    return () => unsubscribe();
+  };
+}
+
+export function updateMessage(mssg) {
+  return (dispatch) => {
+    const keyId = mssg[0].keyId;
+    const docRef = doc(db, "messages", keyId);
+    const updatedData = {
+      userId: mssg[0].userId,
+      username: mssg[0].username,
+      profile_picture: mssg[0].profile_picture,
+      message: "updated six",
+      timestamp: mssg[0].timestamp,
+    };
+
+    setDoc(docRef, updatedData)
+      .then(() => console.log("success"))
+      .catch((err) => console.log(err));
+  };
+}
