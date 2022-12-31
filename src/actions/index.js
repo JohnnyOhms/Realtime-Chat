@@ -137,12 +137,15 @@ export function updateMessage(mssg) {
       userId: mssg[0].userId,
       username: mssg[0].username,
       profile_picture: mssg[0].profile_picture,
-      message: "updated six",
+      message: "updated six again",
       timestamp: mssg[0].timestamp,
     };
 
     setDoc(docRef, updatedData)
-      .then(() => console.log("success"))
+      .then(() => {
+        console.log("success");
+        dispatch(chatsAction(mssg));
+      })
       .catch((err) => console.log(err));
   };
 }
