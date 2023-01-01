@@ -11,12 +11,14 @@ import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { auth, signOutApi } from "../actions";
 
 const pages = ["Log out"];
 
 export const StartPage = (props) => {
   const user = useSelector((state) => state.userState.user);
+  const dispatch = useDispatch();
   const [anchorElNav, setAnchorElNav] = useState(null);
 
   const handleOpenNavMenu = (event) => {
@@ -27,9 +29,13 @@ export const StartPage = (props) => {
     setAnchorElNav(null);
   };
 
+  const handleClick = () => {
+    dispatch(signOutApi());
+  };
+
   return (
     <React.Fragment>
-      <AppBar position="static">
+      <AppBar position="fixed">
         <Container maxWidth="xl">
           <Toolbar disableGutters>
             <AdbIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
@@ -82,7 +88,9 @@ export const StartPage = (props) => {
                 {user &&
                   pages.map((page) => (
                     <MenuItem key={page} onClick={handleCloseNavMenu}>
-                      <Typography textAlign="center">{page}</Typography>
+                      <Typography textAlign="center" onClick={handleClick}>
+                        {page}
+                      </Typography>
                     </MenuItem>
                   ))}
               </Menu>
@@ -112,7 +120,7 @@ export const StartPage = (props) => {
                 pages.map((page) => (
                   <Button
                     key={page}
-                    onClick={handleCloseNavMenu}
+                    onClick={handleClick}
                     sx={{ my: 2, color: "white", display: "block" }}
                   >
                     {page}
@@ -122,7 +130,7 @@ export const StartPage = (props) => {
 
             <Box sx={{ flexGrow: 0 }}>
               {user && (
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                <Avatar alt="Remy Sharp" src={auth.currentUser.photoURL} />
               )}
             </Box>
           </Toolbar>

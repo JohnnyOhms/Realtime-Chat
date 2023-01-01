@@ -1,16 +1,16 @@
 import React from "react";
 import StartPage from "./component/startPage";
 import { useSelector } from "react-redux";
-import Main from "./component/main";
+import Chat from "./component/chat";
 import LoginIn from "./component/LoginIn";
 
 const App = () => {
   const user = useSelector((state) => state.userState.user);
 
   return (
-    <div>
+    <div className="overflow-hidden">
       <StartPage />
-      {user ? <Main /> : <LoginIn />}
+      {user ? <Chat /> : <LoginIn />}
     </div>
   );
 };

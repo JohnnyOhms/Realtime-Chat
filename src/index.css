@@ -6,10 +6,50 @@
     width: 100vw;
     height: 100vh;
     display: flex;
-    /* justify-content: center;
-    align-items: center; */
 }
 
 .signin-btn > * {
-    margin: 3rem auto;
+    margin: 5.5rem auto;
 }
+
+.send-btn{
+   position: absolute;
+   right: 10px;
+   bottom: 15px;
+   z-index: 2;
+   color: #ffff;
+   background-color: #1976d2;
+   /* background-color: #1565c0; */
+   padding: 10px;
+   width: 80px;
+   font-size: 18px;
+   font-weight: 600;
+   font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+.display-mssg{
+    height: calc( 100vh - 22vh);
+    margin-top: 74px;
+    overflow-y: auto;
+}
+
+.text-mssg{
+    align-items: center;
+    box-shadow: 20px;
+    border-radius: 20px;
+    margin: 10px;
+    padding: 5px;
+    max-width: 20rem;
+    word-wrap: break-word;
+
+}
+
+.end{
+    /* margin-left: none; */
+    width: fit-content;
+    padding: 2px;
+}
+
+/* .mssg-container{
+    flex-direction: row-reverse;
+} */
