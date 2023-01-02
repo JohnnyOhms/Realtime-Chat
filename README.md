@@ -3,7 +3,6 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## `Live Demo`
-Open https://aesthetic-pudding-b4ed1d.netlify.app/ to preview
 
 ## Available Scripts
 
