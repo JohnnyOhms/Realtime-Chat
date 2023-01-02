@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getMessage } from "../actions";
 import SingleMessage from "./singleMessage";
@@ -9,7 +9,7 @@ const ReadMessage = () => {
 
   useEffect(() => {
     dispatch(getMessage());
-  }, []);
+  }, [""]);
 
   return (
     <div className="display-mssg">

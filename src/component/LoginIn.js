@@ -4,13 +4,13 @@ import { bindActionCreators } from "redux";
 import { signInAPI, onAuthUser } from "../actions";
 import { connect } from "react-redux";
 
-const LoginIn = (props) => {
+const LoginIn = ({ onAuthUser, signInAPI }) => {
   useEffect(() => {
-    props.onAuthUser();
-  }, []);
+    onAuthUser();
+  }, [""]);
 
   const handleClick = () => {
-    props.signInAPI();
+    signInAPI();
   };
 
   return (

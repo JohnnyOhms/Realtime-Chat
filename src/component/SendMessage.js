@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { getSingleData, updateMessage, writeMessage } from "../actions";
+import { writeMessage } from "../actions";
 import { auth } from "../actions";
 
 const SendMessage = () => {

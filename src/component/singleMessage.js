@@ -2,7 +2,6 @@ import React, { useRef, useState } from "react";
 import { Avatar } from "@mui/material";
 import { auth, deletMessage, getSingleData } from "../actions";
 import { useDispatch } from "react-redux";
-import ReadMessage from "./ReadMessage";
 
 const SingleMessage = (props) => {
   const [displayOption, setDisplayOption] = useState(false);
@@ -20,7 +19,6 @@ const SingleMessage = (props) => {
   const handleDeleteClick = () => {
     dispatch(deletMessage(mssgRef.current.id));
     setDisplayOption((prev) => !prev);
-    // return <ReadMessage />;
   };
 
   return (
