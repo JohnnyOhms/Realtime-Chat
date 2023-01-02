@@ -19,7 +19,9 @@ import {
   query,
   setDoc,
   where,
+  deleteDoc,
 } from "firebase/firestore";
+import ReadMessage from "../component/ReadMessage";
 
 export const userAction = (payload) => ({
   type: SET_USER,
@@ -112,7 +114,7 @@ export function getMessage() {
   };
 }
 
-export function getSingleData(keyId) {
+export function getSingleData(keyId, value) {
   return async (dispatch) => {
     const q = query(
       collection(db, "messages"),
@@ -123,13 +125,13 @@ export function getSingleData(keyId) {
       snapshot.forEach((doc) => {
         mssg.push({ ...doc.data(), keyId: doc.id });
       });
-      dispatch(updateMessage(mssg));
+      dispatch(updateMessage(mssg, value));
     });
     return () => unsubscribe();
   };
 }
 
-export function updateMessage(mssg) {
+export function updateMessage(mssg, value) {
   return (dispatch) => {
     const keyId = mssg[0].keyId;
     const docRef = doc(db, "messages", keyId);
@@ -137,14 +139,27 @@ export function updateMessage(mssg) {
       userId: mssg[0].userId,
       username: mssg[0].username,
       profile_picture: mssg[0].profile_picture,
-      message: "updated six again",
+      message: value,
       timestamp: mssg[0].timestamp,
     };
 
     setDoc(docRef, updatedData)
       .then(() => {
         console.log("success");
-        dispatch(chatsAction(mssg));
+        // dispatch(chatsAction(mssg));
+      })
+      .catch((err) => console.log(err));
+  };
+}
+
+export function deletMessage(keyId) {
+  return async (dispatch) => {
+    const docRef = doc(db, "messages", keyId);
+    await deleteDoc(docRef)
+      .then(() => {
+        console.log("deleted");
+        // dispatch(getMessage());
+        return <ReadMessage />;
       })
       .catch((err) => console.log(err));
   };

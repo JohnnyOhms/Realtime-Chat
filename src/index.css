@@ -33,18 +33,7 @@
     overflow-y: auto;
 }
 
-.text-mssg{
-    align-items: center;
-    box-shadow: 20px;
-    border-radius: 20px;
-    margin: 10px;
-    padding: 5px;
-    max-width: 20rem;
-    word-wrap: break-word;
-
-}
-
-.end{
+.body{
     /* margin-left: none; */
     width: fit-content;
     padding: 2px;
@@ -53,3 +42,22 @@
 /* .mssg-container{
     flex-direction: row-reverse;
 } */
+
+.edit-del{
+    position: absolute;
+    top: 40px;
+    z-index: 2;
+    width: 4rem;
+    text-align: center;
+    /* display: none; */
+}
+
+.edit-del > * {
+    border: 1px solid #eddcdc;
+    border-radius: 8px;
+    padding: 2px;
+    margin: 2px;
+    background-color: #eddcdc;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    cursor: pointer;
+}
