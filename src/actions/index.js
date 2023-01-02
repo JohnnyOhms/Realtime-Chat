@@ -1,7 +1,6 @@
 import {
   getAuth,
   signInWithPopup,
-  GoogleAuthProvider,
   onAuthStateChanged,
   signOut,
 } from "firebase/auth";

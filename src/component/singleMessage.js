@@ -23,7 +23,6 @@ const SingleMessage = (props) => {
 
   return (
     <div
-      key={props.keyId}
       className="body"
       style={{
         marginLeft:

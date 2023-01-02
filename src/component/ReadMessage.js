@@ -9,13 +9,13 @@ const ReadMessage = () => {
 
   useEffect(() => {
     dispatch(getMessage());
-  }, [""]);
+  }, [dispatch]);
 
   return (
     <div className="display-mssg">
       {chats &&
         chats.map((item) => {
-          return <SingleMessage item={item} />;
+          return <SingleMessage item={item} key={item.keyId} />;
         })}
     </div>
   );

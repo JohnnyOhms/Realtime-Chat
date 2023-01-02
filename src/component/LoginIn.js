@@ -7,7 +7,7 @@ import { connect } from "react-redux";
 const LoginIn = ({ onAuthUser, signInAPI }) => {
   useEffect(() => {
     onAuthUser();
-  }, [""]);
+  }, [onAuthUser]);
 
   const handleClick = () => {
     signInAPI();
